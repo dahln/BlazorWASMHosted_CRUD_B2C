@@ -24,6 +24,20 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+//Check for and automatically apply pending migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var db = services.GetRequiredService<DBContext>();
+    if (db != null)
+    {
+        var migrations = db.Database.GetPendingMigrations();
+        if (migrations.Any())
+            db.Database.Migrate();
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
