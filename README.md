@@ -1,4 +1,6 @@
-# BlazorWASMHosted_CRUD_B2C
+[![Build and deploy](https://github.com/dahln/BlazorWASMHosted_CRUD_B2C/actions/workflows/main_blazorwasm-hosted-crud-b2c.yml/badge.svg)](https://github.com/dahln/BlazorWASMHosted_CRUD_B2C/actions/workflows/main_blazorwasm-hosted-crud-b2c.yml)
+
+# Blazor WASM Hosted CRUD B2C Demo
 This project is a demo of how to build a .NET web application, using Hosted Blazor WASM. The API (Server App) and the Client app are hosted together. Both applications use Azure B2C for authentication/authorization. 
 
 ### Setup:
