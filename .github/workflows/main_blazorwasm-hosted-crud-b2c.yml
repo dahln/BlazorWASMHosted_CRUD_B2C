@@ -42,7 +42,7 @@ jobs:
       - name: Client App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: '**/*/wwwroot/appsettings.json'
+          files: '{{env.DOTNET_ROOT}}/myapp/wwwroot/appsettings.json'
         env:
           Scope: ${{ secrets.SCOPE }}
           AzureAd.Authority: ${{ secrets.AZUREADB2C_ClIENT_AUTHORITY }}
