@@ -15,65 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Server App Settings Variable Substitution
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: '**/*.Server/**/appsettings.json'
-        env:
-          ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
-          AzureAd.ClientId: ${{ secrets.AZUREADB2C_CLIENTID }}
-          AzureAd.Domain: ${{ secrets.AZUREADB2C_DOMAIN }}
-          AzureAd.Instance: ${{ secrets.AZUREADB2C_INSTANCE }}
-          AzureAd.SignUpSignInPolicyId: ${{ secrets.AZUREADB2C_SIGNUPSIGNINPOLICYID }}
-          AzureAd.Scopes: ${{ secrets.Scopes }}
-          
-      - name: Client App Settings Variable Substitution
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: '$**.Client/wwwroot/appsettings.json'
-        env:
-          Scope: ${{ secrets.SCOPE }}
-          AzureAd.Authority: ${{ secrets.AZUREADB2C_ClIENT_AUTHORITY }}
-          AzureAd.ClientId: ${{ secrets.AZUREADB2C_CLIENT_CLIENTID }}
-          AzureAd.ValidateAuthority: ${{ secrets.AZUREADB2C_CLIENT_VALIDATEAUTHORITY }}
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: .net-app
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'BlazorWASMHosted-CRUD-B2C'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9F03576345F148B1BEAD97E25BBB98D3 }}
-          package: .
+      
+      - name: Print directory structure
+        # You may pin to the exact commit or the version.
+        # uses: FiorelaCiroku/XDTesting-Print-Directory-Structure@f7838b2b03bee5e7b5b4918c057ebc39d91eb779
+        uses: FiorelaCiroku/XDTesting-Print-Directory-Structure@v1.0.0
