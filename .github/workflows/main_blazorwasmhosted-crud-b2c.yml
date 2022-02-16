@@ -11,21 +11,15 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest 
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
       - name: Server App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: '${{env.DOTNET_ROOT}}/**/*.Server/appsettings.json'
+          files: '**/*.Server/**/appsettings.json'
         env:
           ConnectionStrings.DefaultConnection: ${{ secrets.ConnectionString }}
           AzureAd.ClientId: ${{ secrets.AZUREADB2C_CLIENTID }}
@@ -37,13 +31,18 @@ jobs:
       - name: Client App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: '${{env.DOTNET_ROOT}}/**/*.Client/wwwroot/appsettings.json'
+          files: '$**/*.Client/**/wwwroot/appsettings.json'
         env:
           Scope: ${{ secrets.SCOPE }}
           AzureAd.Authority: ${{ secrets.AZUREADB2C_ClIENT_AUTHORITY }}
           AzureAd.ClientId: ${{ secrets.AZUREADB2C_CLIENT_CLIENTID }}
           AzureAd.ValidateAuthority: ${{ secrets.AZUREADB2C_CLIENT_VALIDATEAUTHORITY }}
 
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
