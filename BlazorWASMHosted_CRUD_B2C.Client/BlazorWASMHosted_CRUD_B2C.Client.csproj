@@ -21,6 +21,11 @@
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+	<!--https://stackoverflow.com/questions/67805062/blazor-wasm-net-6-preview-4-azure-ad-there-was-an-error-trying-to-log-you-in-->
+	<ItemGroup>
+	    <TrimmerRootAssembly Include="Microsoft.Authentication.WebAssembly.Msal" />
+    </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\BlazorWASMHosted_CRUD_B2C.Common\BlazorWASMHosted_CRUD_B2C.Common.csproj" />
   </ItemGroup>
